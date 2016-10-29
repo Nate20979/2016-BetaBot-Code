@@ -1,4 +1,4 @@
-// TODO: Use TimeWatch class instead of relying on the 20ms packet timings
+package src;
 
 // Imports the other files needed by the program
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -12,7 +12,7 @@ public class Robot extends IterativeRobot {
     RobotDrive myRobot;
     Joystick stick;
 
-    int autoLoopCounter;
+    TimeWatch timeWatch;
 
     // Initializes the variables in the robotInit method, this method is called when the robot is initializing
     public void robotInit() {
@@ -23,27 +23,30 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         // This method is called once each time the robot enters autonomous mode
 
-        // This resets the loop counter to 0
-        autoLoopCounter = 0;
+        // Start the timer
+        timeWatch = TimeWatch.start();
     }
 
     public void autonomousPeriodic() {
         // This method is called each time the robot recieves a packet instructing the robot to be in autonomous enabled mode
 
-        // Checks to see if the counter has reached 100 yet
-        if (autoLoopCounter < 100) {
-            // If the robot hasn't reached 100 packets yet, the robot is set to drive forward at half speed, the next line increments the counter by 1
+        // If we have driven for less than 5 seconds,
+        // drive forwards
+        if (timeWatch.time() <= 5) {
             myRobot.drive(-0.5, 0.0);
-            autoLoopCounter++;
         }
+        // Otherwise, stop
         else {
-            // If the robot has reached 100 packets, this line tells the robot to stop
             myRobot.drive(0.0, 0.0);
         }
+
     }
 
     public void teleopInit() {
         // The teleopInit method is called once each time the robot enters teleop mode
+
+        // Restart the timer
+        timeWatch.restart();
     }
 
     public void teleopPeriodic() {
@@ -54,6 +57,6 @@ public class Robot extends IterativeRobot {
     }
 
     public void testPeriodic() {
-        LiveWindow.run();
+        // LiveWindow.run();
     }
 }
