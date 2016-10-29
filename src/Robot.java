@@ -1,3 +1,5 @@
+// TODO: Use TimeWatch class instead of relying on the 20ms packet timings
+
 // Imports the other files needed by the program
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
