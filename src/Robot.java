@@ -26,6 +26,7 @@ public class Robot extends IterativeRobot {
 
         // Start the timer
         timeWatch = TimeWatch.start();
+        
     }
 
     public void autonomousPeriodic() {
